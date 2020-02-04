@@ -11,4 +11,8 @@ class Post extends Model
     public static function getPublishedPosts(){
         return self::where('published', true); //jer vraca samog sebe, Post model vraca post objekat. get(): izvrsi query. Get vraca array. Vraca sve sto nasao pod datim kriterijumom. get() uvek ide zadnji. Get() mozemo da ga zakacimo i u kontroleru, ako ga nismo ovde zakacili.
     }
+
+    public function comments(){
+        return $this->hasMany(Comment::class);
+    }
 }

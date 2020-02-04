@@ -15,6 +15,8 @@ Route::get('/posts', 'PostController@create');
 
 Route::post('posts', 'PostController@store');
 
+Route::post('posts/{postId}/comments','CommentController@store');
+
 
 
 

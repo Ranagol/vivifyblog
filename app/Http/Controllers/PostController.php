@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;//ovaj kontroler se nalazi ovde, namespace pokazuje mesto gde se file nalazi
 
 use App\Post;
+use App\Comment;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
 
@@ -48,8 +49,15 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show($id)
     {
+        $post = Post::with('comments')->find($id);
+        \Log::info($post);//komanda za logovanjeeeeeee. Log arhiva je ovde: storage/logs/laravel.log
+
+        /*
+[2020-02-04 18:01:53] local.INFO: {"id":1,"title":"Prvi post","body":"Kontent prvog posta","published":1,"created_at":"2020-02-04 17:59:02","updated_at":"2020-02-04 17:59:02","comments":[]}  
+
+        */
         return view('posts.show', compact('post'));
     }
 
