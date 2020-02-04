@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers;//ovaj kontroler se nalazi ovde, namespace pokazuje mesto gde se file nalazi
 
 use App\Post;
 use Illuminate\Http\Request;
+use App\Http\Requests\PostRequest;
 
 class PostController extends Controller
 {
@@ -14,7 +15,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::getPublishedPosts()->get();//poziva funkciju definisanu u Post.php
         return view('posts.index', compact('posts'));
     }
 
@@ -25,7 +26,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts.create');
     }
 
     /**
@@ -34,9 +35,11 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
-        //
+        ////sve iz posta neka bude jednako svacime iz request. Post::create je built in funckija u Post
+        $post = Post::create($request->all());
+        return redirect('/');
     }
 
     /**
@@ -49,6 +52,15 @@ class PostController extends Controller
     {
         return view('posts.show', compact('post'));
     }
+
+    /*jos jedna varijanta za show
+    public function show($id){//id se automatski preuzima iz url. AKo ima dva parametara u url, onda ce preuzeti dva, ali onda show($id1, $id2) treba da se koristi.
+        $post = Post::find($id);
+        return view('posts.single-post', compact('post'));
+    }
+
+
+    */
 
     /**
      * Show the form for editing the specified resource.

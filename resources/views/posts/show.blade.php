@@ -4,8 +4,10 @@
 
 @section('content')
 
-<h2>{{ $post->title }}</h2>
-<p>{{ $post->content }}</p>
+<h2>Title: {{ $post->title }}</h2>
+<p>Content: {{ $post->body }}</p>
+<p>Published: {{ $post->published }}</p>
+<p>Created at: {{ $post->created_at }}</p>
 
 
 @endsection
