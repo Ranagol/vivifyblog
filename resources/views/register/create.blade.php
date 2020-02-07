@@ -2,7 +2,7 @@
 @section('title')
 @section('content')
 <div class="container">
-  <h2>Create blade</h2>
+  <h2>Create blade za usere</h2>
 <!--OVO JE FORMA ZA SLANJE REGISTROVANIH PODATAKA -->
 <form method="POST" action="/register">
   @csrf
@@ -20,6 +20,11 @@
   <div class="form-group">
     <label for="password">Password</label>
     <input type="password" name="password" class="form-control" id="password">
+  </div>
+
+  <div>
+    <label for="age">Age</label>
+    <input type="text" class="form-control" id="age" name="age">
   </div>
 
 

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;//ovaj kontroler se nalazi ovde, namespace pokazuje mesto gde se file nalazi
 
 use App\Post;
+use App\User;
 use App\Comment;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
+
 
 class PostController extends Controller
 {
@@ -21,7 +23,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::getPublishedPosts()->get();//poziva funkciju definisanu u Post.php
+        $posts = Post::getPublishedPosts()->with('user')->get();//poziva funkciju definisanu u Post.php
+        \Log::info($posts);
         return view('posts.index', compact('posts'));
     }
 
@@ -43,8 +46,9 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-        ////sve iz posta neka bude jednako svacime iz request. Post::create je built in funckija u Post
-        $post = Post::create($request->all());
+        //sve iz posta neka bude jednako svacime iz request. Post::create je built in funckija u Post
+        $id = auth()->user()->id;
+        $post = Post::create(array_merge($request->all(), ['user_id' => $id]));//ovde smo $id ubacili u array (key je user_id, value je $id), pa smo taj array mergovali sa $request array. Dakle, poenta je da je $request array sa key value parovima. OVde ubacujemo nedostajuci podatak
         return redirect('/');
     }
 
@@ -56,7 +60,9 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::with('comments')->find($id);
+        //******************************************* */
+        $post = Post::with('comments', 'user.posts')->find($id);// ne treba dva puta with moze ovako: with('comments', 'user')
+        // 'user.posts'---ovako bindujemo usera sa svim njegovim postovima. posts() je funkcija iz User modela
         \Log::info($post);//komanda za logovanjeeeeeee. Log arhiva je ovde: storage/logs/laravel.log
 
         /*

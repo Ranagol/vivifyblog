@@ -4,6 +4,13 @@
 
 @section('content')
 
+<hr>
+
+<h2><a href="/users/{{ $post->user->id}}">Autor: {{ $post->user->name}}</a></h2>
+<hr>
+
+
+
 <h2>Title: {{ $post->title }}</h2>
 <p>Content: {{ $post->body }}</p>
 <p>Published: {{ $post->published }}</p>
