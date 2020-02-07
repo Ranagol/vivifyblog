@@ -39,11 +39,6 @@ class CommentController extends Controller
         return redirect('posts/' . $postId);
     }
 
-    
-
-
-
-
 
     public function show(Comment $comment)
     {
