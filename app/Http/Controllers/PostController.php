@@ -7,6 +7,8 @@ use App\User;
 use App\Comment;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
+use Illuminate\Support\Facades\Mail;//ovo treba za slanje mejla
+use App\Mail\SendMailable;//ovo je ono sto smo pravili
 
 
 class PostController extends Controller
@@ -113,6 +115,13 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         //
+    }
+
+
+    public function mail(){
+        $name = 'Vanja pravi sranja';
+        Mail::to('andorhorvat@gmail.com')->send(new SendMailable($name));
+        return 'Email was sent.';
     }
 }
 

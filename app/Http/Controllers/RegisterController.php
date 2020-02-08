@@ -23,6 +23,7 @@ class RegisterController extends Controller
         $user->password = bcrypt(request('password'));
         $user->save();
         auth()->login($user);
+        session()->flash('message', 'Thanks for registration.');//ovde smo sacuvali podatke... i ovi podaci ce se pojaviti u index.blade
         return redirect('/');
     }
 }
