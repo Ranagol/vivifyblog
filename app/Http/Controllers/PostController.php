@@ -23,10 +23,11 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Post $post)
     {
         $posts = Post::getPublishedPosts()->with('user')->get();//poziva funkciju definisanu u Post.php
         \Log::info($posts);
+        //$tags = $post->tags;
         return view('posts.index', compact('posts'));
     }
 

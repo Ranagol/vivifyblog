@@ -12,7 +12,7 @@ class TagController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Tag $tag)
+    public function index(Tag $tag)//ovo je ovde dependency injection!!!!!!!!Ako se radi o tagu 1, dobicemo TAg 1, jer se $tag pretvara u 1. Laravel ce traziti id 1.
     {
         $posts = $tag->posts;
         return view('posts.index', compact('posts'));

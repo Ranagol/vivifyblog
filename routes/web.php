@@ -29,7 +29,7 @@ Route::get('/users/{id}', 'UserController@show');
 
 Route::get('/send/mail', 'PostController@mail');//slanje mejla
 
-Rotue::get('/posts/tags/{tag}', 'TagController@index');// za vise na vise odnose sa izmedju post o tag modela
+Route::get('/posts/tags/{tag}', 'TagController@index');// za vise na vise odnose sa izmedju post o tag modela
 
 
 

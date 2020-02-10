@@ -12,25 +12,24 @@
 
 
 
-
-
-
-
-
-
-
 <h3>Ovo je index</h3>
 <ul>
   @foreach($posts as $post)
    <li>
     @if($post->user)<!--zastita, jer nema svaki post usera -->
       <h4>Autor: {{ $post->user->name }}</h4>
+      
     @endif
+
+    <p>Tagovi:
+      <ul>
+        @foreach($post->tags as $tag)<!--tags je methoda definisana u Post modelu -->
+      <a href="/posts/tags/{{$tag->name }}"><li>{{ $tag->name }}</li></a>
+          
+        @endforeach
+      </ul>
+    </p>
     
-
-
-
-
     <h4>Naslov: <a href="/posts/{{ $post->id }}">{{ $post->title}}</a></h4>
    
     <div>Sadrzaj: {{ $post->body }}</div>
