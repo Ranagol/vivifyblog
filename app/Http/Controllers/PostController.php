@@ -4,6 +4,7 @@ namespace App\Http\Controllers;//ovaj kontroler se nalazi ovde, namespace pokazu
 
 use App\Post;
 use App\User;
+use App\Tag;
 use App\Comment;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
@@ -25,8 +26,14 @@ class PostController extends Controller
      */
     public function index(Post $post)
     {
-        $posts = Post::getPublishedPosts()->with('user')->get();//poziva funkciju definisanu u Post.php
-        \Log::info($posts);
+        $posts = Post::getPublishedPosts()->with('user')->latest()->paginate(10);//poziva funkciju definisanu u Post.php. Na kraju, umesto get() smo stavili paginate() za paginaciju
+
+        //ovde sada njakamo eager loadin i lazy loading. Ne zelimo previse upita ka bazi. Zelimo da sto manje opterecujemo bazu. Eager loading je uvek pozeljnije. Ovo sve proveriti kasnije kuci.
+
+
+
+
+        \Log::info($posts);//
         //$tags = $post->tags;
         return view('posts.index', compact('posts'));
     }
@@ -36,9 +43,10 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create()//
     {
-        return view('posts.create');
+        $tags = Tag::all();//ovde povlacimo sve tagove za create post stranu, jer nam tamo treba
+        return view('posts.create', compact('tags'));
     }
 
     /**
@@ -47,11 +55,15 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PostRequest $request)
+    public function store(PostRequest $request)//request sada sadrzi i dodatni tags niz, sa idjeiva iz checkboxa, sto smo slali
     {
         //sve iz posta neka bude jednako svacime iz request. Post::create je built in funckija u Post
         $id = auth()->user()->id;
-        $post = Post::create(array_merge($request->all(), ['user_id' => $id]));//ovde smo $id ubacili u array (key je user_id, value je $id), pa smo taj array mergovali sa $request array. Dakle, poenta je da je $request array sa key value parovima. OVde ubacujemo nedostajuci podatak
+
+        $post = Post::create(array_merge($request->except('tags'), ['user_id' => $id]));//ovde smo $id ubacili u array (key je user_id, value je $id), pa smo taj array mergovali sa $request array. Dakle, poenta je da je $request array sa key value parovima. OVde ubacujemo nedostajuci podatak. Sada ove ne diramo tags, tags diramo u sledecom koraku, jer za tags treba attach.
+        
+
+        $post->tags()->attach(request('tags'));//attach je za pivot tabele kod many to many. U slucaju tags mora se koristiti naknadno attach, pivot tabela sadrzi postid o tagid. Na osnovu relacije post sa tagom, dodaj tagovu.
         return redirect('/');
     }
 

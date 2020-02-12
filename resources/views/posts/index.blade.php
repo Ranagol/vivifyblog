@@ -12,6 +12,8 @@
 
 
 
+
+
 <h3>Ovo je index</h3>
 <ul>
   @foreach($posts as $post)
@@ -32,10 +34,18 @@
     
     <h4>Naslov: <a href="/posts/{{ $post->id }}">{{ $post->title}}</a></h4>
    
-    <div>Sadrzaj: {{ $post->body }}</div>
+    <div><strong>Sadrzaj:</strong> {{ $post->body }}</div>
    </li>
+   <hr>
   @endforeach
  </ul>
+
+ <!--paginacijaaaaa-->
+ <nav>
+  <a href="{{ $posts->previousPageUrl()}} ">Previous</a>
+  <a href="{{ $posts->nextPageUrl()}} ">Next</a>
+  <!--Obavezno uporediti moju staru metodu sa Ivaninim novom metodom -->
+ </nav>
 
  
 

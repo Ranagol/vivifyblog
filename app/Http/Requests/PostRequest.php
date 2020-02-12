@@ -26,6 +26,7 @@ class PostRequest extends FormRequest
         return [
             'body' => 'required',
             'title' => 'required',
+            'tags' => 'required|array'        
         ];
     }
 }
