@@ -30,9 +30,6 @@ class PostController extends Controller
 
         //ovde sada njakamo eager loadin i lazy loading. Ne zelimo previse upita ka bazi. Zelimo da sto manje opterecujemo bazu. Eager loading je uvek pozeljnije. Ovo sve proveriti kasnije kuci.
 
-
-
-
         \Log::info($posts);//
         //$tags = $post->tags;
         return view('posts.index', compact('posts'));
@@ -77,24 +74,15 @@ class PostController extends Controller
     {
         //******************************************* */
         $post = Post::with('comments', 'user.posts')->find($id);// ne treba dva puta with moze ovako: with('comments', 'user')
-        // 'user.posts'---ovako bindujemo usera sa svim njegovim postovima. posts() je funkcija iz User modela
+        // 'user.posts'---ovako bindujemo usera sa svim njegovim pripadajucim postovima. posts() je funkcija iz User modela
         \Log::info($post);//komanda za logovanjeeeeeee. Log arhiva je ovde: storage/logs/laravel.log
-
-        /*
-[2020-02-04 18:01:53] local.INFO: {"id":1,"title":"Prvi post","body":"Kontent prvog posta","published":1,"created_at":"2020-02-04 17:59:02","updated_at":"2020-02-04 17:59:02","comments":[]}  
-
-        */
         return view('posts.show', compact('post'));
     }
 
-    /*jos jedna varijanta za show
-    public function show($id){//id se automatski preuzima iz url. AKo ima dva parametara u url, onda ce preuzeti dva, ali onda show($id1, $id2) treba da se koristi.
-        $post = Post::find($id);
-        return view('posts.single-post', compact('post'));
-    }
+   
 
 
-    */
+    
 
     /**
      * Show the form for editing the specified resource.

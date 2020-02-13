@@ -12,6 +12,11 @@
     @include('templates.header')
 
     @yield('content')
+
+    <div>
+      <!-- Tagove ucitavamo u master, jer zelimo tagove da budu dostupni svugde. AppServiceProvider namestamo sve.-->
+      {{ dd($tags)}}
+    </div>
   
   </div>
 

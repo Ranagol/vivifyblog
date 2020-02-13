@@ -9,7 +9,7 @@ class PostsTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run()//zadatak: za svakog user napraviti 5 postova
     {
         App\User::all()->each(function(App\User $user) {//all()uzmi svakog usera. Each je kao foreach.
             $user->posts()->saveMany(factory(App\Post::class, 5)->make()); //posts() je komanda iz relacija sto smi mi radili. User imace vise postova, zato saveMany. Pravi se 5 postova

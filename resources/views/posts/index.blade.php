@@ -18,9 +18,8 @@
 <ul>
   @foreach($posts as $post)
    <li>
-    @if($post->user)<!--zastita, jer nema svaki post usera -->
-      <h4>Autor: {{ $post->user->name }}</h4>
-      
+    @if($post->user)<!--zastita, jer nema svaki post usera. Ako post ima usera... -->
+      <h4>Autor: {{ $post->user->name }}</h4><!--.... onda echo user name -->
     @endif
 
     <p>Tagovi:
@@ -39,13 +38,8 @@
    <hr>
   @endforeach
  </ul>
+ {{ $posts->render() }}
 
- <!--paginacijaaaaa-->
- <nav>
-  <a href="{{ $posts->previousPageUrl()}} ">Previous</a>
-  <a href="{{ $posts->nextPageUrl()}} ">Next</a>
-  <!--Obavezno uporediti moju staru metodu sa Ivaninim novom metodom -->
- </nav>
 
  
 

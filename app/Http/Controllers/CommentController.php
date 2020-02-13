@@ -28,15 +28,11 @@ class CommentController extends Controller
         //
     }
 
-    
-
-
-
-    public function store($postId)//parametri koje se nalaze u url, nisu u Request $request!!!!!!!!!
+    public function store($postId)//parametri koje se nalaze u url, nisu nikad u Request $request!!!!!!!!!
     {
-        $post = Post::find($postId);
-        $post->comments()->create(request()->all());
-        return redirect('posts/' . $postId);
+        $post = Post::find($postId);//pronadji mi ovaj post sa id $postId
+        $post->comments()->create(request()->all());//kreiraj pripadajuci komentar u db za ovaj post, za kreiranje komentara uzmi podatke iz $request. all() returns collection
+        return redirect('posts/' . $postId);//redirektuj gde treba...
     }
 
 
