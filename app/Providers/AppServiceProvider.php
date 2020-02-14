@@ -26,11 +26,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+
         //ovde se pravi view composer
-        view()->composer('master', function($view){//prvi parametart je view koji ciljamo, drugi parametar je anon fukcija, koja prima ovaj mster view kao argument
+        view()->composer('master', function($view){//prvi parametart je view koji ciljamo, drugi parametar je anonimna fukcija, koja prima ovaj master view kao argument
             //$tag->posts;//ovako pristupamo kao propertiju, kada nema zagrada. Kada ima zagrada, onda posts pristupamo kao metodi. posts je metoda definisana u Tag modelu.
             $tags = Tag::has('posts')->get(); //tu dovlacimo Tagove koji imaju postove, necemo tagove bez postova
-            $view->with(compact('tags')); //ovako smo master viewu nakacili tagove, i to je to
+            $view->with(compact('tags')); //ovako smo master viewu nakacili tagove, i to je to.
         });
     }
 }

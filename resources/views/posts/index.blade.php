@@ -38,6 +38,7 @@
    <hr>
   @endforeach
  </ul>
+ 
  {{ $posts->render() }}
 
 

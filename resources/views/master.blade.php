@@ -13,9 +13,11 @@
 
     @yield('content')
 
-    <div>
+    <div><!--ovo ovde je samo simbol za sidebar, ovako mozemo prikazati sve tagove u sidebaru -->
       <!-- Tagove ucitavamo u master, jer zelimo tagove da budu dostupni svugde. AppServiceProvider namestamo sve.-->
-      {{ dd($tags)}}
+      @foreach($tags as $tag)
+        <a href="/posts/tags/{{ $tag->name }}">{{ $tag->name }}</a>
+      @endforeach
     </div>
   
   </div>
